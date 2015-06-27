@@ -30,7 +30,7 @@ gulp.task('serve', function () {
 
   nodemon({
     execMap: {
-      js: 'node --harmony'
+      js: 'npm run babel-node'
     },
     script: 'server/main.js',
     ext: 'js'

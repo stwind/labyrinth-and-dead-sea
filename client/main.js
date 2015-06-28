@@ -1,5 +1,12 @@
-import debug from 'debug';
+import dbg from 'debug';
+import io from 'socket.io-client';
 
-debug.enable('app:*');
+dbg.enable('app:*');
 
-console.log('client');
+var debug = dbg('app:main');
+
+var socket = io('ws://localhost:3000');
+
+socket.on('connect', () => {
+  debug('connected');
+});

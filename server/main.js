@@ -9,6 +9,9 @@ import compression from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
+import api from './routes/api';
+import ws from './ws';
+
 var debug = dbg('app:server');
 var server = express();
 var httpServer = http.createServer(server);
@@ -21,8 +24,8 @@ server.use(cookieParser());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
-// server.use('/api', expressJwt({ secret: nconf.get('auth:secret') }));
-server.use('/api', require('./routes/api'));
+server.use('/api', api);
+ws(httpServer);
 
 if ('development' == env) {
 }

@@ -8,6 +8,9 @@ import Intent from './intent';
 // import WampIntent from './wampIntent';
 import InitialModel from './initial';
 
+require('normalize.css/normalize.css');
+require('styles/app.css');
+
 dbg.enable('app:*');
 
 var debug = dbg('app:main');

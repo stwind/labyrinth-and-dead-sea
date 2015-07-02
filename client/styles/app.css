@@ -1,0 +1,18 @@
+html {
+    font-size: 62.5%; 
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-size: 1.2em; /* currently ems cause chrome bug misinterpreting rems on body element */
+    line-height: 1.6rem;
+    font-family: monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+}

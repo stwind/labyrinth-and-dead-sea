@@ -12,14 +12,14 @@ module.exports = {
   },
 
   entry: {
-    main: ['webpack/hot/only-dev-server', './client/main.js'],
+    main: ['webpack/hot/only-dev-server', './client/scripts/main.js'],
     vendor: ['d3','lodash','debug','autobahn','cyclejs']
   },
 
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      styles: path.resolve(__dirname, "src/styles")
+      styles: path.resolve(__dirname, "client/styles")
     }
   },
 

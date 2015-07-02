@@ -1,10 +1,11 @@
 import dbg from 'debug';
 import Cycle from 'cyclejs';
-// import io from 'socket.io-client';
 
 import Model from './model';
 import View from './view';
-// import Intent from './intent';
+import Intent from './intent';
+// import Wamp from './wampDriver';
+// import WampIntent from './wampIntent';
 import InitialModel from './initial';
 
 dbg.enable('app:*');
@@ -12,20 +13,15 @@ dbg.enable('app:*');
 var debug = dbg('app:main');
 
 var computer = function (interactions) {
-    // const intent = Intent(interactions);
-    const model = Model(InitialModel());
-    const vtree$ = View(model);
+  const intent = Intent(interactions);
+  // const wampIntent = WampIntent(interactions);
+  const model = Model(intent, InitialModel());
+  const vtree$ = View(model);
 
-    return { dom: vtree$ };
+  return { dom: vtree$ };
 };
 
-var domDriver = Cycle.makeDOMDriver('#main');
 Cycle.run(computer, {
-    dom: domDriver
+  dom: Cycle.makeDOMDriver('#main')
+  // wamp: Wamp.createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
 });
-
-// var socket = io.connect('ws://localhost:3000');
-
-// socket.on('connect', () => {
-//   debug('connected');
-// });

@@ -13,7 +13,7 @@ module.exports = {
 
   entry: {
     main: ['webpack/hot/only-dev-server', './client/main.js'],
-    vendor: ['d3','lodash','debug']
+    vendor: ['d3','lodash','debug','autobahn','cyclejs']
   },
 
   resolve: {
@@ -46,7 +46,10 @@ module.exports = {
     }, {
       test: /\.css$/,
       loaders: ['style', 'css', 'autoprefixer?browsers=last 2 version']
-    }, {
+    }, { 
+      test: /\.json$/,
+      loader: 'json'
+    },{
       test: /\.(png|jpg)$/,
       loader: 'url?limit=8192'
     }, {

@@ -1,7 +1,7 @@
 import { Rx } from 'cyclejs';
+import { fromJS } from 'immutable';
 
 export default function ModelSource() {
-    return {
-        model$: Rx.Observable.just({ fuck: 'you'} )
-    };
+  var model = { pos: { x: 100, y: 100 } };
+  return fromJS(model);
 };

@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import api from './routes/api';
-import ws from './ws';
+import wamp from './wamp';
 
 var debug = dbg('app:server');
 var server = express();
@@ -25,7 +25,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
 server.use('/api', api);
-ws(httpServer);
+wamp(httpServer);
 
 if ('development' == env) {
 }

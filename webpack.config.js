@@ -17,7 +17,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['', '.js', '.jsx'],
     alias: {
       styles: path.resolve(__dirname, "src/styles")
     }
@@ -36,7 +36,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loaders: ['babel?optional[]=runtime&stage=0']
+      loaders: ['babel?optional[]=runtime&stage=0','virtual-dom']
     }, {
       test: /\.scss/,
       loaders: ['style','css','autoprefixer?browsers=last 2 version!',

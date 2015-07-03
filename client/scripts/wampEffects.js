@@ -6,7 +6,7 @@ var debug = dbg('app:wamp:effects');
 export default function WampEffects(intent, model) {
   var click$ = intent.click$
                      .withLatestFrom(model.model$, (pos, m) => ({ 
-                       id: m.get('id'), pos: pos, lm: m.get('lm')
+                       id: m.get('id'), pos: pos
                      }))
                      .map(v => {
                        return {

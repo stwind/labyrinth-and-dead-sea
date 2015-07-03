@@ -9,14 +9,19 @@ export default function Model(intent, wampIntent, initial) {
             .set('id', v.id);
   });
   var click$ = intent.click$.map(pos => m => {
-    return m.mergeIn(['pos'], pos).set('lm', Date.now());
+    return m.mergeIn(['pos'], pos);
   });
 
   var mods$ = Rx.Observable.merge(click$, wampConnected$);
 
+  function updateLastMod(model) {
+    return model.set('lastmod', Date.now());
+  }
+
   return {
     model$: mods$.merge(Rx.Observable.just(initial))
                  .scan((model, modFn) => modFn(model))
+                 .map(updateLastMod)
                  .shareReplay(1)
   };
 }

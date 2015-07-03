@@ -1,9 +1,18 @@
+import dbg from 'debug';
 import { Rx } from 'cyclejs';
 
-export default function Model(intent, initial) {
-  var move$ = intent.move$.map(pos => m => m.mergeIn(['pos'], pos));
+var debug = dbg('app:model');
 
-  var mods$ = Rx.Observable.merge(move$);
+export default function Model(intent, wampIntent, initial) {
+  var wampConnected$ = wampIntent.connected$.map(v => m => {
+    return m.setIn(['status','connected'], true)
+            .set('id', v.id);
+  });
+  var click$ = intent.click$.map(pos => m => {
+    return m.mergeIn(['pos'], pos).set('lm', Date.now());
+  });
+
+  var mods$ = Rx.Observable.merge(click$, wampConnected$);
 
   return {
     model$: mods$.merge(Rx.Observable.just(initial))

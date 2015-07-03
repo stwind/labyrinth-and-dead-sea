@@ -12,7 +12,12 @@ body {
     font-family: monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-#main {
+#app {
+    height: 100%;
+    width: 100%;
+}
+
+.main {
     height: 100%;
     width: 100%;
 }

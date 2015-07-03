@@ -1,41 +1,38 @@
-// import dbg from 'debug';
-// import { Rx } from 'cyclejs';
-// import autobahn from 'autobahn';
+import dbg from 'debug';
+import { Rx } from 'cyclejs';
+import autobahn from 'autobahn';
 
-// var debug = dbg('app:wamp:driver');
+var debug = dbg('app:wamp:driver');
 
-// function createWampDriver(url, realm) {
+function createWampDriver(url, realm) {
+  var socket = new autobahn.Connection({ url: url, realm: realm });
 
-//   var onaji = new autobahn.Connection({ url: url, realm: realm });
+  var events = {
+    connected$: new Rx.Subject()
+  };
 
-//   onaji.onopen = function (session) {
-//     debug('hihi', session);
-//   };
+  function get(eventName) {
+    return events[eventName + '$'];
+  }
 
-//   onaji.open();
+  function connected(session, events$) {
+    events$.forEach(event => session.call(event.uri, event.args));
 
-//   function get(eventName) {
-//     return Rx.Observable.create(observer => {
-//       const sub = socket.on(eventName, function (message) {
-//         observer.onNext(message);
-//       });
-//       return function dispose() {
-//         sub.dispose();
-//       };
-//     });
-//   }
+    events.connected$.onNext({ id: session.id });
+  }
 
-//   function publish(messageType, message) {
-//     socket.emit(messageType, message);
-//   }
+  return function (events$) {
+    socket.onopen = function (session) {
+      connected(session, events$);
+    };
 
-//   return function socketIODriver(events$) {
-//     events$.forEach(event => publish(event.messageType, event.message));
-//     return {
-//       get,
-//       dispose: socket.destroy.bind(socket)
-//     }
-//   };
-// }
+    socket.open();
 
-// export default { createWampDriver };
+    return {
+      get: get,
+      dispose: socket.close.bind(socket)
+    };
+  };
+}
+
+export default { createWampDriver };

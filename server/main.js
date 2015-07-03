@@ -10,12 +10,14 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import api from './routes/api';
+import Onaji from './onaji';
 import wamp from './wamp';
 
 var debug = dbg('app:server');
 var server = express();
 var httpServer = http.createServer(server);
 var env = server.get('env');
+var onaji = new Onaji();
 
 nconf.file(path.join(__dirname, './config/' + env + '.json'));
 
@@ -25,7 +27,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
 server.use('/api', api);
-wamp(httpServer);
+wamp(httpServer, onaji);
 
 if ('development' == env) {
 }

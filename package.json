@@ -16,7 +16,8 @@
     "debug": "^2.2.0",
     "express": "^4.13.0",
     "nconf": "^0.7.1",
-    "nightlife-rabbit": "git+https://github.com/christian-raedel/nightlife-rabbit.git"
+    "nightlife-rabbit": "git+https://github.com/christian-raedel/nightlife-rabbit.git",
+    "rx": "^2.5.3"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",

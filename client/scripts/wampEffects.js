@@ -3,17 +3,14 @@ import { Rx } from 'cyclejs';
 
 var debug = dbg('app:wamp:effects');
 
-export default function WampEffects(intent, model) {
-  var click$ = intent.click$
-                     .withLatestFrom(model.model$, (pos, m) => ({ 
-                       id: m.get('id'), pos: pos
-                     }))
-                     .map(v => {
-                       return {
-                         uri: 'snd.onaji.pos.add',
-                         args: [v.id, v.pos.toJS()]
-                       };
-                     });
+export default function WampEffects(user, model) {
+  var click$ = user.click$
+    .withLatestFrom(model.model$, (pos, m) => {
+      return { 
+        uri: 'snd.onaji.peer.move', 
+        args: [m.get('id'), pos.toJS()] 
+      };
+    });
 
   return Rx.Observable.merge(click$).shareReplay(1);
 }

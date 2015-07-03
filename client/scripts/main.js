@@ -2,12 +2,12 @@ import dbg from 'debug';
 import Cycle from 'cyclejs';
 
 import Model from './model';
+import { initial as initialModel } from './model';
 import View from './view';
 import Intent from './intent';
 import Wamp from './wampDriver';
 import WampIntent from './wampIntent';
 import WampEffects from './wampEffects';
-import InitialModel from './initial';
 
 require('normalize.css/normalize.css');
 require('styles/app.css');
@@ -17,10 +17,10 @@ dbg.enable('app:*');
 var debug = dbg('app:main');
 
 var computer = function (interactions) {
-  const intent = Intent(interactions);
+  const userIntent = Intent(interactions);
   const wampIntent = WampIntent(interactions);
-  const model = Model(intent, wampIntent, InitialModel());
-  const wampEffects$ = WampEffects(intent, model);
+  const model = Model(userIntent, wampIntent, initialModel());
+  const wampEffects$ = WampEffects(userIntent, model);
   const vtree$ = View(model);
 
   return { dom: vtree$, wamp: wampEffects$ };

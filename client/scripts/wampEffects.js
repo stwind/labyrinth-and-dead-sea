@@ -8,7 +8,7 @@ export default function WampEffects(user, model) {
     .withLatestFrom(model.model$, (pos, m) => {
       return { 
         uri: 'snd.onaji.peer.move', 
-        args: [m.get('id'), pos.toJS()] 
+        args: [m.get('id'), pos.toJS(), Date.now() - m.get('startedAt')] 
       };
     });
 

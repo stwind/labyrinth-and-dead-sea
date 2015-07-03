@@ -25,6 +25,7 @@ export default class Onaji {
   }
 
   peerMove(id, pos, delta) {
+    debug('moved', id, pos, delta);
     this._peers[id].move(pos, delta);
   }
 }

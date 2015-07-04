@@ -20,7 +20,7 @@ var computer = function (interactions) {
   const userIntent = Intent(interactions);
   const wampIntent = WampIntent(interactions);
   const model = Model(userIntent, wampIntent, initialModel());
-  const wampEffects$ = WampEffects(userIntent, model);
+  const wampEffects$ = WampEffects(userIntent, wampIntent, model);
   const vtree$ = View(model);
 
   return { dom: vtree$, wamp: wampEffects$ };

@@ -20,11 +20,15 @@ export function initial () {
 }
 
 export default function Model(user, wamp, initial) {
-  var wampConnected$ = wamp.connected$
-    .tap(session => debug('wamp connected', session))
+  var wampOpened$ = wamp.opened$
+    .tap(session => debug(`wamp opened: ${session.id}`))
     .map(session => m => {
       return m.merge({ connected: true, id: session.id });
     });
+
+  var wampClosed$ = wamp.closed$
+    .tap(() => debug('wamp closed'))
+    .map(() => m => m.merge({ connected: false }));
 
   var wampRoomEntered$ = wamp.roomEntered$
     .tap(() => debug('room entered'))
@@ -34,7 +38,7 @@ export default function Model(user, wamp, initial) {
 
   var click$ = user.click$.map(pos => m => m.mergeIn(['pos'], pos));
 
-  var mods$ = Rx.Observable.merge(click$, wampConnected$, wampRoomEntered$);
+  var mods$ = Rx.Observable.merge(click$, wampOpened$, wampClosed$, wampRoomEntered$);
 
   return {
     model$: mods$.merge(Rx.Observable.just(initial))

@@ -7,10 +7,21 @@ import onaji from './onaji';
 
 var debug = dbg('app:wamp');
 
-var services = {
-  'snd.onaji.peer.enter': 'peerEnter',
-  'snd.onaji.peer.move': 'peerMove'
-};
+function setupService (session, onaji) {
+  session.register('snd.onaji.peer.move', args => onaji.peerMove.apply(onaji, args));
+
+  session.register('snd.onaji.peer.enter', args => {
+    var id = args[0];
+    var uri = `snd.onaji.moves.${id}`;
+
+    var peer = onaji.peerEnter(id);
+    peer.stream.subscribe(
+      x => session.publish(uri, [x]),
+      err => debug('err', err),
+      () => debug('move streams end', uri)
+    );
+  });
+}
 
 export default function (server, onaji) {
   var router = nightlife.createRouter({
@@ -19,18 +30,13 @@ export default function (server, onaji) {
   });
 
   var realm = 'snd.onaji';
+  var url = `ws://${nconf.get('listen')}:${nconf.get('port')}/wamp`;
 
   router.createRealm(realm);
 
-  var url = `ws://${nconf.get('listen')}:${nconf.get('port')}/wamp`;
-
   var socket = new autobahn.Connection({ url: url, realm: realm });
 
-  socket.onopen = session => {
-    Object.keys(services).forEach(uri => {
-      session.register(uri, args => onaji[services[uri]].apply(onaji, args));
-    })
-  };
+  socket.onopen = session => setupService(session, onaji);
 
   socket.open();
 }

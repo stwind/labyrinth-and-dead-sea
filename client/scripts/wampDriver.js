@@ -8,8 +8,8 @@ function createWampDriver (url, realm) {
   var events = {
     opened$: new Rx.Subject(),
     closed$: new Rx.Subject(),
-    roomEntered$: new Rx.Subject(),
-    moves$: new Rx.Subject()
+    started$: new Rx.Subject(),
+    actions$: new Rx.Subject()
   };
 
   function onOpen (session, events$) {
@@ -17,18 +17,18 @@ function createWampDriver (url, realm) {
 
     events.opened$.onNext({ id: session.id });
 
-    subscribeMoves(session).then(() => enterRoom(session));
+    subscribeMoves(session).then(() => start(session));
   }
   
   function subscribeMoves (session) {
     return session.subscribe(`snd.onaji.moves.${session.id}`, args => {
-      events.moves$.onNext(args[0]);
+      events.actions$.onNext(args[0]);
     });
   }
 
-  function enterRoom (session) {
+  function start (session) {
     session.call('snd.onaji.peer.enter', [session.id])
-      .then(() => events.roomEntered$.onNext(true));
+      .then(() => events.started$.onNext(true));
   }
 
   function onClose() {

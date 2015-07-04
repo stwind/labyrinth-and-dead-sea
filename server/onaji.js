@@ -11,8 +11,8 @@ export class Peer {
     this.stream = stream;
   }
 
-  move(pos, offset) {
-    this._moves.onNext({ id: this.id, pos: pos, offset: offset });
+  move(state, offset) {
+    this._moves.onNext({ id: this.id, state, offset });
   }
 
   getMovesStream() {
@@ -32,9 +32,9 @@ export default class Onaji {
     return peer;
   }
 
-  peerMove(id, pos, offset) {
-    debug('moved', id, pos, offset);
-    this._peers[id].move(pos, offset);
+  peerMove(id, state, offset) {
+    debug('moved', id, state, offset);
+    this._peers[id].move(state, offset);
   }
 
   getMovesStream() {

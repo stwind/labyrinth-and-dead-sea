@@ -22,6 +22,12 @@ function updatePeer(state) {
   return peer => peer.merge(state);
 }
 
+function applyMods(mods$, model) {
+  return mods$.merge(Rx.Observable.just(model))
+              .scan((acc, mod) => mod(acc))
+              .shareReplay(1);
+}
+
 export default function Model(user, wamp, { space, peers, self }) {
 
   // self modifications
@@ -29,34 +35,20 @@ export default function Model(user, wamp, { space, peers, self }) {
   var click$ = user.click$.map(pos => updatePeer({ pos }));
 
   var selfMods$ = Rx.Observable.merge(userStarted$, click$);
-
-  var self$ = selfMods$
-    .merge(Rx.Observable.just(self))
-    .scan((self, mod) => mod(self))
-    .shareReplay(1);
+  var self$ = applyMods(selfMods$, self);
 
   // peers modifications
   var peersUpdate$ = wamp.actions$.map(a => updatePeerIn(a.id, a.state));
 
   var peersMods$ = Rx.Observable.merge(peersUpdate$);
-
-  var peers$ = peersMods$
-    .merge(Rx.Observable.just(peers))
-    .scan((peers, mod) => mod(peers))
-    .shareReplay(1);
+  var peers$ = applyMods(peersMods$, peers);
 
   // space modifications
   var spaceModConnected$ = wamp.opened$.map(() => s => s.merge({ connected: true }));
   var spaceModClosed$ = wamp.closed$.map(() => s => s.merge({ connected: false }));
 
-  var spaceMods$ = Rx.Observable.merge(
-    spaceModConnected$, spaceModClosed$
-  );
-
-  var space$ = spaceMods$
-    .merge(Rx.Observable.just(space))
-    .scan((space, mod) => mod(space))
-    .shareReplay(1);
+  var spaceMods$ = Rx.Observable.merge(spaceModConnected$, spaceModClosed$);
+  var space$ = applyMods(spaceMods$, space);
 
   return { self$, peers$, space$ };
 }

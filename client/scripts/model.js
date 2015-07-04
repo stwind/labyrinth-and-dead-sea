@@ -9,6 +9,8 @@ export function initial () {
     id: 0,
     pos: { x: 0, y: 0 }, 
 
+    moves: [],
+
     connected: false,
     started: false,
 
@@ -36,9 +38,16 @@ export default function Model(user, wamp, initial) {
       return m.merge({ started: true, startedAt: Date.now() });
     });
 
+  var wampMoves$ = wamp.moves$
+    .tap(x => debug('move', x))
+    .map(x => m => {
+      return m.updateIn(['moves'], moves => moves.push(x));
+    });
+
   var click$ = user.click$.map(pos => m => m.mergeIn(['pos'], pos));
 
-  var mods$ = Rx.Observable.merge(click$, wampOpened$, wampClosed$, wampRoomEntered$);
+  var mods$ = Rx.Observable.merge(
+    click$, wampOpened$, wampClosed$, wampRoomEntered$, wampMoves$);
 
   return {
     model$: mods$.merge(Rx.Observable.just(initial))

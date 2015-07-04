@@ -22,7 +22,7 @@ function createWampDriver (url, realm) {
   
   function subscribeMoves (session) {
     return session.subscribe(`snd.onaji.moves.${session.id}`, args => {
-      debug('shit', args[0]);
+      events.moves$.onNext(args[0]);
     });
   }
 

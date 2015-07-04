@@ -4,6 +4,7 @@ export default function wampIntent({ wamp }) {
   return {
     opened$: wamp.get('opened').shareReplay(1),
     closed$: wamp.get('closed').shareReplay(1),
-    roomEntered$: wamp.get('roomEntered').shareReplay(1)
+    roomEntered$: wamp.get('roomEntered').shareReplay(1),
+    moves$: wamp.get('moves').shareReplay(1)
   }
 }

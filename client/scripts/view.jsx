@@ -1,5 +1,5 @@
 import dbg from 'debug';
-import { h } from 'cyclejs';
+import { h } from '@cycle/web';
 
 var debug = dbg('app:view');
 

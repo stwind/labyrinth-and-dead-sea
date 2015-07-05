@@ -1,5 +1,5 @@
 import dbg from 'debug';
-import { Rx } from 'cyclejs';
+import { Rx } from '@cycle/core';
 import autobahn from 'autobahn';
 
 var debug = dbg('app:wamp:driver');

@@ -1,5 +1,6 @@
 import dbg from 'debug';
-import Cycle from 'cyclejs';
+import Cycle from '@cycle/core';
+import CycleWeb from '@cycle/web';
 
 import Model from './model';
 import { initial as initialModel } from './model';
@@ -27,6 +28,6 @@ var computer = function (interactions) {
 };
 
 Cycle.run(computer, {
-  dom: Cycle.makeDOMDriver('#app'),
+  dom: CycleWeb.makeDOMDriver('#app'),
   wamp: Wamp.createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
 });

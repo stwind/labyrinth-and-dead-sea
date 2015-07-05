@@ -13,7 +13,7 @@ module.exports = {
 
   entry: {
     main: ['webpack/hot/only-dev-server', './client/scripts/main.js'],
-    vendor: ['d3','lodash','debug','autobahn','cyclejs']
+    vendor: ['d3','lodash','debug','autobahn']
   },
 
   resolve: {

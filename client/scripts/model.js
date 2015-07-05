@@ -1,5 +1,5 @@
 import dbg from 'debug';
-import { Rx } from 'cyclejs';
+import { Rx } from '@cycle/core';
 import { fromJS, Map } from 'immutable';
 
 var debug = dbg('app:model');

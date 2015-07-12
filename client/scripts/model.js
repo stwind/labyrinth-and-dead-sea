@@ -34,7 +34,7 @@ export default function Model(user, wamp, { space, peers, self }) {
   var userStarted$ = wamp.opened$.map(s => updatePeer({ id: s.id, startedAt: Date.now()}));
   var click$ = user.click$.map(pos => updatePeer({ pos }));
 
-  var selfMods$ = Rx.Observable.merge(userStarted$, click$);
+  var selfMods$ = Rx.Observable.merge(userStarted$);
   var self$ = applyMods(selfMods$, self);
 
   // peers modifications

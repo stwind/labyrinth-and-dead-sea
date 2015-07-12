@@ -9,8 +9,7 @@ import Intent from './intent';
 import { createWampDriver } from './wampDriver';
 import WampIntent from './wampIntent';
 import WampEffects from './wampEffects';
-
-import velocity from 'velocity-animate';
+import Sekai from './components/sekai';
 
 require('normalize.css/normalize.css');
 require('styles/app.css');
@@ -30,6 +29,8 @@ var computer = function (interactions) {
 };
 
 Cycle.run(computer, {
-  dom: makeDOMDriver('#app'),
+  dom: makeDOMDriver('#app', {
+    'sekai': Sekai
+  }),
   wamp: createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
 });

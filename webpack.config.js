@@ -13,7 +13,7 @@ module.exports = {
 
   entry: {
     main: ['webpack/hot/only-dev-server', './client/scripts/main'],
-    vendor: ['debug','immutable','autobahn','@cycle/core','@cycle/web','velocity-animate']
+    vendor: ['debug','immutable','autobahn','@cycle/core','@cycle/web']
   },
 
   resolve: {

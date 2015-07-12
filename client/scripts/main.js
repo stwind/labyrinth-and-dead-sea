@@ -1,14 +1,16 @@
 import dbg from 'debug';
 import Cycle from '@cycle/core';
-import CycleWeb from '@cycle/web';
+import { makeDOMDriver } from '@cycle/web';
 
 import Model from './model';
 import { initial as initialModel } from './model';
 import View from './view';
 import Intent from './intent';
-import Wamp from './wampDriver';
+import { createWampDriver } from './wampDriver';
 import WampIntent from './wampIntent';
 import WampEffects from './wampEffects';
+
+import velocity from 'velocity-animate';
 
 require('normalize.css/normalize.css');
 require('styles/app.css');
@@ -28,6 +30,6 @@ var computer = function (interactions) {
 };
 
 Cycle.run(computer, {
-  dom: CycleWeb.makeDOMDriver('#app'),
-  wamp: Wamp.createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
+  dom: makeDOMDriver('#app'),
+  wamp: createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
 });

@@ -20,17 +20,17 @@ var debug = dbg('app:main');
 
 var computer = function (interactions) {
   const userIntent = Intent(interactions);
-  const wampIntent = WampIntent(interactions);
-  const model = Model(userIntent, wampIntent, initialModel());
-  const wampEffects$ = WampEffects(userIntent, wampIntent, model);
+  // const wampIntent = WampIntent(interactions);
+  const model = Model(userIntent, initialModel());
+  // const wampEffects$ = WampEffects(userIntent, wampIntent, model);
   const vtree$ = View(model);
 
-  return { dom: vtree$, wamp: wampEffects$ };
+  return { dom: vtree$ };
 };
 
 Cycle.run(computer, {
   dom: makeDOMDriver('#app', {
     'sekai': Sekai
-  }),
-  wamp: createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
+  })
+  // wamp: createWampDriver('ws://localhost:3000/wamp', 'snd.onaji')
 });

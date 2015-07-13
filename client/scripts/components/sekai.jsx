@@ -41,7 +41,8 @@ function Hook() {}
 
 Hook.prototype.hook = function hook(node) {
   var tweenable = new Tweenable();
-  var center = [51.505, -0.09];
+  // var center = [51.505, -0.09];
+  var center = [36.174, 120.453];
 
   var map = L.map(node, {
     touchZoom: false,
@@ -49,15 +50,16 @@ Hook.prototype.hook = function hook(node) {
     doubleClickZoom: false,
     boxZoom: false,
     zoomControl: false,
+    attributionControl: false,
     center: [0, 0,]
-  }).setView(center, 18);
+  }).setView(center, 17);
 
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    id: 'stwind.05303e06',
+    id: 'mapbox.streets-satellite',
     accessToken: 'pk.eyJ1Ijoic3R3aW5kIiwiYSI6IjFiYzQwY2ZmMjk5YzdjYjMzMTllYTg5NWNiZjM3MjU4In0.SSNQkMgoc2kiqsaSqg9pKg'
   }).addTo(map);
 
-  var myIcon = L.divIcon({className: 'my-div-icon'});
+  var myIcon = L.divIcon({className: 'peer'});
   var marker = L.marker(center, {icon: myIcon}).addTo(map);
 
   map.on('moveend', e => {

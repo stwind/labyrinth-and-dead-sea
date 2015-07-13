@@ -6,9 +6,9 @@ import Model from './model';
 import { initial as initialModel } from './model';
 import View from './view';
 import Intent from './intent';
-import { createWampDriver } from './wampDriver';
-import WampIntent from './wampIntent';
-import WampEffects from './wampEffects';
+// import { createWampDriver } from './wampDriver';
+// import WampIntent from './wampIntent';
+// import WampEffects from './wampEffects';
 import Sekai from './components/sekai';
 
 require('normalize.css/normalize.css');

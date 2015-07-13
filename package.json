@@ -35,6 +35,7 @@
     "gulp": "^3.9.0",
     "gulp-copy": "0.0.2",
     "gulp-filesize": "0.0.6",
+    "gulp-gh-pages": "^0.5.2",
     "gulp-load-plugins": "^1.0.0-rc",
     "gulp-size": "^1.2.2",
     "gulp-useref": "^1.2.0",
@@ -57,6 +58,7 @@
     "virtual-dom-loader": "^0.1.0",
     "webpack": "^1.9.12",
     "webpack-dev-server": "^1.9.0",
+    "webpack-stream": "^2.0.0",
     "yargs": "^3.13.0"
   },
   "engines": {

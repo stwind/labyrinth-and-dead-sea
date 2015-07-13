@@ -1,9 +1,9 @@
 {
-  "name": "onajiyume",
+  "name": "labyrinth-and-dead-sea",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stwind/onajiyume.git"
+    "url": "https://github.com/stwind/labyrinth-and-dead-sea.git"
   },
   "scripts": {
     "babel-node": "babel-node --stage 0"

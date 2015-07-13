@@ -11,6 +11,8 @@ import Intent from './intent';
 // import WampEffects from './wampEffects';
 import Sekai from './components/sekai';
 
+import _LCTP from './Leaflet.ChineseTmsProviders';
+
 require('normalize.css/normalize.css');
 require('styles/app.css');
 

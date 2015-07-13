@@ -54,10 +54,7 @@ Hook.prototype.hook = function hook(node) {
     center: [0, 0,]
   }).setView(center, 17);
 
-  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    id: 'mapbox.streets-satellite',
-    accessToken: 'pk.eyJ1Ijoic3R3aW5kIiwiYSI6IjFiYzQwY2ZmMjk5YzdjYjMzMTllYTg5NWNiZjM3MjU4In0.SSNQkMgoc2kiqsaSqg9pKg'
-  }).addTo(map);
+  L.tileLayer.chinaProvider('GaoDe.Satellite.Map',{maxZoom:18,minZoom:5}).addTo(map);
 
   var myIcon = L.divIcon({className: 'peer'});
   var marker = L.marker(center, {icon: myIcon}).addTo(map);

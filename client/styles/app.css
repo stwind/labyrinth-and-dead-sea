@@ -26,6 +26,12 @@ body {
     height: 100%;
 }
 
+.my-div-icon {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+}
+
 /* leaflet */
 
 .leaflet-map-pane,

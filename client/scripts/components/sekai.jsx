@@ -55,6 +55,7 @@ Hook.prototype.hook = function hook(node) {
   }).setView(center, 17);
 
   L.tileLayer.chinaProvider('GaoDe.Satellite.Map',{maxZoom:18,minZoom:5}).addTo(map);
+  L.tileLayer.chinaProvider('GaoDe.Satellite.Annotion',{maxZoom:18,minZoom:5}).addTo(map);
 
   var myIcon = L.divIcon({className: 'peer'});
   var marker = L.marker(center, {icon: myIcon}).addTo(map);

@@ -68,7 +68,8 @@ Hook.prototype.hook = function hook(node) {
     tweenable.stop().tween({
       from: { lat: oldLatLng.lat, lng: oldLatLng.lng },
       to: { lat: newLatLng.lat, lng: newLatLng.lng },
-      duration: 1000,
+      duration: 1200,
+      easing: 'easeInOutQuad',
       step({ lat, lng }) {
         marker.setLatLng(L.latLng([lat, lng]));
         dark.update();

@@ -42,7 +42,7 @@ function Hook() {}
 Hook.prototype.hook = function hook(node) {
   var tweenable = new Tweenable();
   // var center = [51.505, -0.09];
-  var center = [36.174, 120.453];
+  var center = [39.96, 116.382];
 
   var map = L.map(node, {
     touchZoom: false,
@@ -93,6 +93,7 @@ var DarkLayer = L.Class.extend({
   onAdd(map) {
     this._map = map;
     this._initCanvas();
+    this._initLightRange();
     map.getPanes().overlayPane.appendChild(this._canvas);
     map.on('viewreset', this._draw, this);
     map.on('move', this._move, this);
@@ -120,6 +121,11 @@ var DarkLayer = L.Class.extend({
     }
   },
 
+  _initLightRange() {
+    var { x, y } = this._map.getSize();
+    this._lightRange = Math.min(250, Math.min(x, y) * 0.5);
+  },
+
   _draw() {
     this._canvas.width = this._canvas.width
     var ctx = this._ctx;
@@ -129,7 +135,7 @@ var DarkLayer = L.Class.extend({
 
     this._markers.forEach(m => {
       var point = this._map.latLngToContainerPoint(m.getLatLng());
-      this._drawLight(Math.floor(point.x), Math.floor(point.y), 250);
+      this._drawLight(Math.floor(point.x), Math.floor(point.y), this._lightRange);
     });
   },
 

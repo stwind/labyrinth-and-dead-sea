@@ -13,6 +13,11 @@ var webpackDistConfig = require('./webpack.dist.config.js');
 
 gulp.task('clean', require('del').bind(null, ['dist/*','!dist/.git*']));
 
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe($.ghPages());
+});
+
 gulp.task('html', function() {
   return gulp.src('public/index.html')
     .pipe(gulp.dest('dist'))
